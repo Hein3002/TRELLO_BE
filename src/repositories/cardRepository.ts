@@ -1,19 +1,18 @@
 import { injectable } from "tsyringe";
 import { Database } from "../config/database";
-import { ColumnModel } from "../models/columnModel";
+import { CardModel } from "../models/cardModel";
 
 @injectable()
-export class ColumnReponsitory {
+export class CardReponsitory {
     constructor(private db: Database) { };
 
-    async createColumn(column: ColumnModel): Promise<any> {
+    async createCard(card: CardModel): Promise<any> {
         try {
-            const sql = 'call CreateColumn(?, ?, ?, ?, @err_code, @err_msg)';
+            const sql = 'call CreateCard(?, ?, ?, @err_code, @err_msg)';
             await this.db.query(sql, [
-                column.board_id,
-                column.name,
-                column.background,
-                column.status
+                card.column_id,
+                card.name,
+                card.status
             ]);
             return true;
         } catch (error: any) {
@@ -21,16 +20,20 @@ export class ColumnReponsitory {
         }
     }
 
-    async updateColumn(column: ColumnModel): Promise<any> {
+    async updateCard(card: CardModel): Promise<any> {
         try {
-            const sql = 'call UpdateColumn(?, ?, ?, ?, ?, ?, @err_code, @err_msg)';
+            const sql = 'call UpdateCard(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, @err_code, @err_msg)';
             const [results] = await this.db.query(sql, [
-                column.column_id,
-                column.board_id,
-                column.name,
-                column.background,
-                column.card_id_order,
-                column.status
+                card.card_id,
+                card.column_id,
+                card.name,
+                card.description,
+                card.background,
+                card.user_id_join,
+                card.start_date,
+                card.end_date,
+                card.timer,
+                card.status
             ]);
 
             if (Array.isArray(results) && results.length > 0) {
@@ -43,9 +46,9 @@ export class ColumnReponsitory {
         }
     }
 
-    async getAllColumnByBoardID(id: string): Promise<any> {
+    async getCardByID(id: string): Promise<any> {
         try {
-            const sql = 'call GetAllColumnByBoardID(?, @err_code, @err_msg)';
+            const sql = 'call GetCardByID(?, @err_code, @err_msg)';
             const [results] = await this.db.query(sql, [id]);
 
             if (Array.isArray(results) && results.length > 0) {
