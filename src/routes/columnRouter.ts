@@ -1,30 +1,34 @@
 import 'reflect-metadata';
 import { Router } from "express";
 import { container } from "tsyringe";
-import { UploadMiddleware } from '../middlewares/uploadMiddleware';
 import { authenticate } from '../middlewares/authMiddleware';
 import { ColumnController } from '../controllers/columnController';
 
 const columnRouter = Router();
 const columnController = container.resolve(ColumnController);
-const uploadMiddleware = container.resolve(UploadMiddleware);
 
 columnRouter.post(
-    '/create', uploadMiddleware.Upload,
+    '/create',
     authenticate,
     columnController.createColumn.bind(columnController)
 );
 
 columnRouter.post(
-    '/update', uploadMiddleware.Upload,
+    '/updateinformation/:id',
     authenticate,
-    columnController.updateColumn.bind(columnController)
+    columnController.updateInformationColumn.bind(columnController)
 );
 
-columnRouter.get(
-    '/getallbyboardid/:id',
+columnRouter.post(
+    '/updatewhenmovecard',
     authenticate,
-    columnController.getAllColumnByBoardID.bind(columnController)
+    columnController.updateColumnWhenMoveCard.bind(columnController)
+);
+
+columnRouter.delete(
+    '/delete/:id',
+    authenticate,
+    columnController.deleteColumn.bind(columnController)
 );
 
 export default columnRouter;

@@ -17,4 +17,8 @@ export class CardService {
     async getCardByID(id: string): Promise<any> {
         return this.cardReponsitory.getCardByID(id);
     }
+
+    async deleteCard(id: string): Promise<any> {
+        return this.cardReponsitory.deleteCard(id);
+    }
 }

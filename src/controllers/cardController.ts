@@ -34,11 +34,13 @@ export class CardController {
         }
 
         try {
+            const id = req.params.id;
             const files = req.files as Express.Multer.File[];
             const filePaths = files.map(file => file.path);
 
             const oldFilePath = await this.cardService.updateCard({
                 ...value,
+                card_id: id,
                 background: filePaths,
             });
 
@@ -61,6 +63,17 @@ export class CardController {
             }
         } catch (error: any) {
             res.status(500).json({ message: error.message });
+        }
+    }
+
+    async deleteCard(req: Request, res: Response): Promise<any> {
+        try {
+            const id = req.params.id;
+            const oldFilePath  = await this.cardService.deleteCard(id);
+            uploadMiddleware.Remove(oldFilePath.old_path);
+            return res.status(200).json({ message: 'Success', success: true });
+        } catch (error: any) {
+            return res.status(500).json({ message: error.message, success: false });
         }
     }
 }

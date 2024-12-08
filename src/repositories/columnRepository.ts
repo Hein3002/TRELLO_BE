@@ -8,11 +8,10 @@ export class ColumnReponsitory {
 
     async createColumn(column: ColumnModel): Promise<any> {
         try {
-            const sql = 'call CreateColumn(?, ?, ?, ?, @err_code, @err_msg)';
+            const sql = 'call CreateColumn(?, ?, ?, @err_code, @err_msg)';
             await this.db.query(sql, [
                 column.board_id,
                 column.name,
-                column.background,
                 column.status
             ]);
             return true;
@@ -21,38 +20,44 @@ export class ColumnReponsitory {
         }
     }
 
-    async updateColumn(column: ColumnModel): Promise<any> {
+    async updateInformationColumn(column: ColumnModel): Promise<any> {
         try {
-            const sql = 'call UpdateColumn(?, ?, ?, ?, ?, ?, @err_code, @err_msg)';
-            const [results] = await this.db.query(sql, [
+            const sql = 'call UpdateIColumn(?, ?, ?, ?, ?, @err_code, @err_msg)';
+            await this.db.query(sql, [
                 column.column_id,
                 column.board_id,
                 column.name,
                 column.background,
-                column.card_id_order,
                 column.status
             ]);
 
-            if (Array.isArray(results) && results.length > 0) {
-                return results[0];
-            }
-
-            return null;
+            return true;
         } catch (error: any) {
             throw new Error(error.message);
         }
     }
 
-    async getAllColumnByBoardID(id: string): Promise<any> {
+    async updateColumnWhenMoveCard(column: ColumnModel): Promise<any> {
         try {
-            const sql = 'call GetAllColumnByBoardID(?, @err_code, @err_msg)';
-            const [results] = await this.db.query(sql, [id]);
+            const sql = 'call UpdateColumnWhenMoveCard(?, ?, ?, ?, @err_code, @err_msg)';
+            await this.db.query(sql, [
+                column.column_id,
+                column.card_id,
+                column.card_id_order_new,
+                column.card_id_order_old
+            ]);
 
-            if (Array.isArray(results) && results.length > 0) {
-                return results;
-            }
+            return true;
+        } catch (error: any) {
+            throw new Error(error.message);
+        }
+    }
 
-            return null;
+    async deleteColumn(id: string): Promise<any> {
+        try {
+            const sql = 'call DeleteColumn(?, @err_code, @err_msg)';
+            await this.db.query(sql, [id]);
+            return true;
         } catch (error: any) {
             throw new Error(error.message);
         }

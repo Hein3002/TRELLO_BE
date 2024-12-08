@@ -10,11 +10,15 @@ export class ColumnService {
         return this.columnReponsitory.createColumn(column);
     }
 
-    async updateColumn(column: ColumnModel): Promise<any> {
-        return this.columnReponsitory.updateColumn(column);
+    async updateInformationColumn(column: ColumnModel): Promise<any> {
+        return this.columnReponsitory.updateInformationColumn(column);
     }
 
-    async getAllColumnByBoardID(id: string): Promise<any> {
-        return this.columnReponsitory.getAllColumnByBoardID(id);
+    async updateColumnWhenMoveCard(column: ColumnModel): Promise<any> {
+        return this.columnReponsitory.updateColumnWhenMoveCard(column);
+    }
+
+    async deleteColumn(id: string): Promise<any> {
+        return this.columnReponsitory.deleteColumn(id);
     }
 }

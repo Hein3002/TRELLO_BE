@@ -22,10 +22,9 @@ export class CardReponsitory {
 
     async updateCard(card: CardModel): Promise<any> {
         try {
-            const sql = 'call UpdateCard(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, @err_code, @err_msg)';
+            const sql = 'call UpdateCard(?, ?, ?, ?, ?, ?, ?, ?, ?, @err_code, @err_msg)';
             const [results] = await this.db.query(sql, [
                 card.card_id,
-                card.column_id,
                 card.name,
                 card.description,
                 card.background,
@@ -53,6 +52,21 @@ export class CardReponsitory {
 
             if (Array.isArray(results) && results.length > 0) {
                 return results;
+            }
+
+            return null;
+        } catch (error: any) {
+            throw new Error(error.message);
+        }
+    }
+    
+    async deleteCard(id: string): Promise<any> {
+        try {
+            const sql = 'call DeleteCard(?, @err_code, @err_msg)';
+            const [results] = await this.db.query(sql, [id]);
+
+            if (Array.isArray(results) && results.length > 0) {
+                return results[0];
             }
 
             return null;

@@ -4,7 +4,7 @@ import { WorkspaceModel } from "../models/workspaceModel";
 
 @injectable()
 export class WorkspaceReponsitory {
-    constructor(private db: Database) { };  
+    constructor(private db: Database) { };
 
     async createWorkspace(workspace: WorkspaceModel): Promise<any> {
         try {
@@ -35,7 +35,7 @@ export class WorkspaceReponsitory {
             if (Array.isArray(results) && results.length > 0) {
                 return results[0];
             }
-            
+
             return null;
         } catch (error: any) {
             throw new Error(error.message);
@@ -44,27 +44,31 @@ export class WorkspaceReponsitory {
 
     async getWorkspaceById(id: string): Promise<any> {
         try {
-          const sql = 'call GetWorkspaceByID(?, @err_code, @err_msg)';
-          const [results] = await this.db.query(sql, [id]);
+            const sql = 'call GetWorkspaceByID(?, @err_code, @err_msg)';
+            const [results] = await this.db.query(sql, [id]);
 
-          if (Array.isArray(results) && results.length > 0) {
-            return results[0];
-          } 
+            if (Array.isArray(results) && results.length > 0) {
+                return results[0];
+            }
 
-          return null; 
-        } catch (error:any) {
-          throw new Error( error.message);
+            return null;
+        } catch (error: any) {
+            throw new Error(error.message);
         }
     }
 
     async deleteWorkspace(id: string): Promise<any> {
         try {
-          const sql = 'call DeleteWorkspace(?, @err_code, @err_msg)';
-          await this.db.query(sql, [id]);
+            const sql = 'call DeleteWorkspace(?, @err_code, @err_msg)';
+            const [results] = await this.db.query(sql, [id]);
 
-          return null; 
-        } catch (error:any) {
-          throw new Error( error.message);
+            if (Array.isArray(results) && results.length > 0) {
+                return results[0];
+            }
+
+            return null;
+        } catch (error: any) {
+            throw new Error(error.message);
         }
     }
 }

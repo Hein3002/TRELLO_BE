@@ -16,9 +16,15 @@ boardRouter.post(
 );
 
 boardRouter.post(
-    '/update', uploadMiddleware.Upload,
+    '/updateinformation/:id', uploadMiddleware.Upload,
     authenticate,
-    boardController.updateBoard.bind(boardController)
+    boardController.updateIBoard.bind(boardController)
+);
+
+boardRouter.post(
+    '/updatewhenmovecolumn',
+    authenticate,
+    boardController.updateBoardWhenMoveColumn.bind(boardController)
 );
 
 boardRouter.get(
@@ -27,10 +33,11 @@ boardRouter.get(
     boardController.getBoardById.bind(boardController)
 );
 
-boardRouter.get(
-    '/getallbyworkspaceid/:id',
+boardRouter.delete(
+    '/delete/:id',
     authenticate,
-    boardController.getAllBoardByWorkspaceID.bind(boardController)
+    boardController.deleteBoard.bind(boardController)
 );
+
 
 export default boardRouter;

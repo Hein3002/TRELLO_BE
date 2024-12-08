@@ -16,7 +16,7 @@ workspaceRouter.post(
 );
 
 workspaceRouter.post(
-    '/update', uploadMiddleware.Upload,
+    '/update/:id', uploadMiddleware.Upload,
     authenticate,
     workspaceController.updateWorkspace.bind(workspaceController)
 );
@@ -27,7 +27,7 @@ workspaceRouter.get(
     workspaceController.getWorkspaceById.bind(workspaceController)
 );
 
-workspaceRouter.get(
+workspaceRouter.delete(
     '/delete/:id',
     authenticate,
     workspaceController.deleteWorkspace.bind(workspaceController)
