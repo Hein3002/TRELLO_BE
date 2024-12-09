@@ -28,7 +28,7 @@ export class UserController {
 
     async login(req: Request, res: Response): Promise<any> {
         const { error, value } = userSchema.validate(req.body); // check value
-
+        console.log(req.body)
         if (error) {
             return res.status(422).json({ message: error.details[0].message });
         }

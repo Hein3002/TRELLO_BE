@@ -20,13 +20,13 @@ export class WorkspaceController {
 
         try {
             const files = req.files as Express.Multer.File[];
-            const filePaths = files.map(file => file.path);
+            const filePaths = files?.map(file => file.path);
 
-            await this.workspaceService.createWorkspace({
+            const result = await this.workspaceService.createWorkspace({
                 ...value,
                 logo: filePaths,
             });
-            return res.status(200).json({ message: 'Success', results: true });
+            return res.status(200).json({ message: 'Success', results: result[0][0] });
         } catch (error: any) {
             res.status(500).json({ message: error.message, results: false });
         }

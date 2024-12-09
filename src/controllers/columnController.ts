@@ -22,18 +22,18 @@ export class ColumnController {
         const files = req.files as Express.Multer.File[];
         let filePaths: string[] = [];
         
-        if (files.length > 0) {
+        if (files?.length > 0) {
             filePaths = files.map(file => file.path);
         } else {
-            filePaths = [req.body.files];
+            filePaths ? [req.body.files] : null;
         }
 
         try {
-            await this.columnService.createColumn({
+           const response = await this.columnService.createColumn({
                 ...value,
                 background: filePaths,
             });
-            return res.status(200).json({ message: 'Success', results: true });
+            return res.status(200).json({ message: 'Success', results: response[0][0] });
         } catch (error: any) {
             res.status(500).json({ message: error.message, results: false });
         }

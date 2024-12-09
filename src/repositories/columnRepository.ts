@@ -8,14 +8,13 @@ export class ColumnReponsitory {
 
     async createColumn(column: ColumnModel): Promise<any> {
         try {
-            const sql = 'call CreateColumn(?, ?, ?, ?, @err_code, @err_msg)';
-            await this.db.query(sql, [
+            const sql = 'call CreateColumn(?, ?, ?, @err_code, @err_msg)';
+           const results = await this.db.query(sql, [
                 column.board_id,
                 column.name,
-                column.background,
                 column.status
             ]);
-            return true;
+            return results;
         } catch (error: any) {
             throw new Error(error.message);
         }
