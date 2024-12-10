@@ -9,12 +9,17 @@ export class WorkspaceReponsitory {
     async createWorkspace(workspace: WorkspaceModel): Promise<any> {
         try {
             const sql = 'call CreateWorkspace(?, ?, ?, ?, @err_code, @err_msg)';
-            await this.db.query(sql, [
+            const [results] = await this.db.query(sql, [
                 workspace.name,
                 workspace.description,
                 workspace.status,
-                workspace.logo
+                workspace?.logo
             ]);
+
+            if (Array.isArray(results) && results.length > 0) {
+                return results[0];
+            }
+
             return true;
         } catch (error: any) {
             throw new Error(error.message);

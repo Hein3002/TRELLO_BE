@@ -15,8 +15,8 @@ export class ColumnController {
         }
 
         try {
-            await this.columnService.createColumn(value);
-            return res.status(200).json({ message: 'Success', results: true });
+            const results = await this.columnService.createColumn(value);
+            return  res.status(200).json(results);
         } catch (error: any) {
             res.status(500).json({ message: error.message, results: false });
         }

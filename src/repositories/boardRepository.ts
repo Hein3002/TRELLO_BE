@@ -9,13 +9,18 @@ export class BoardReponsitory {
     async createBoard(board: BoardModel): Promise<any> {
         try {
             const sql = 'call CreateBoard(?, ?, ?, ?, ?, @err_code, @err_msg)';
-            await this.db.query(sql, [
+            const [results] = await this.db.query(sql, [
                 board.workspace_id,
                 board.name,
                 board.description,
                 board.background,
                 board.status
             ]);
+
+            if (Array.isArray(results) && results.length > 0) {
+                return results[0];
+            }
+
             return true;
         } catch (error: any) {
             throw new Error(error.message);
@@ -64,6 +69,12 @@ export class BoardReponsitory {
             const [results] = await this.db.query(sql, [id]);
 
             if (Array.isArray(results) && results.length > 0) {
+                if(!results[0].description){
+                    results[0].description = '';
+                }
+                if(!results[0].column){
+                    results[0].column = [];
+                }
                 return results[0];
             }
 
