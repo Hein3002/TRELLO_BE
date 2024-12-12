@@ -19,8 +19,9 @@ export class CardController {
         }
 
         try {
-           const response = await this.cardService.createCard(value);
-            return res.status(200).json({ message: 'Success', results: response[0][0] });
+
+            const results = await this.cardService.createCard(value);
+            return  res.status(200).json(results);
         } catch (error: any) {
             res.status(500).json({ message: error.message, results: false });
         }

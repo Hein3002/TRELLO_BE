@@ -5,5 +5,7 @@ export interface BoardModel {
     description?: string;
     background?: string;
     column_id_order?: string;
-    status?: string
+    status?: string;
+
+    user_id?: number;
 }

@@ -4,4 +4,6 @@ export interface WorkspaceModel {
     status?: string;
     description?: string;
     logo?: string;
+    
+    user_id?: number;
 }

@@ -21,12 +21,14 @@ export class BoardController {
         try {
             const files = req.files as Express.Multer.File[];
             const filePaths = files.map(file => file.path);
+            const user = (req as any).user;
 
-            await this.boardService.createBoard({
+            const results = await this.boardService.createBoard({
                 ...value,
                 background: filePaths,
+                user_id: user.user_id,
             });
-            return res.status(200).json({ message: 'Success', results: true });
+            return res.status(200).json(results);
         } catch (error: any) {
             res.status(500).json({ message: error.message, results: false });
         }
@@ -92,10 +94,25 @@ export class BoardController {
         try {
             const id = req.params.id;
             const oldFilePath  = await this.boardService.deleteBoard(id);
+
             uploadMiddleware.Remove(oldFilePath.old_path);
             return res.status(200).json({ message: 'Success', success: true });
         } catch (error: any) {
             return res.status(500).json({ message: error.message, success: false });
+        }
+    }
+
+    async createGuest(req: Request, res: Response): Promise<any> {
+        const { error, value } = boardSchema.validate(req.body); //check value
+
+        if (error) {
+            return res.status(422).json({ message: error.details[0].message });
+        }
+
+        try {
+            await this.boardService.createGuest(value);
+            return res.status(200).json({ message: 'Success', success: true });
+        } catch (error: any) {
         }
     }
 }

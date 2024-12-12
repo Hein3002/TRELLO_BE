@@ -9,12 +9,18 @@ export class CardReponsitory {
     async createCard(card: CardModel): Promise<any> {
         try {
             const sql = 'call CreateCard(?, ?, ?, @err_code, @err_msg)';
-            const result = await this.db.query(sql, [
+
+            const [results] = await this.db.query(sql, [
                 card.column_id,
                 card.name,
                 card.status
             ]);
-            return result;
+
+            if (Array.isArray(results) && results.length > 0) {
+                return results[0];
+            }
+
+            return true;
         } catch (error: any) {
             throw new Error(error.message);
         }

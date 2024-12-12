@@ -24,11 +24,8 @@ export class ColumnController {
         }
 
         try {
-           const response = await this.columnService.createColumn({
-                ...value,
-                background: filePaths,
-            });
-            return res.status(200).json({ message: 'Success', results: response[0][0] });
+            const results = await this.columnService.createColumn(value);
+            return  res.status(200).json(results);
         } catch (error: any) {
             res.status(500).json({ message: error.message, results: false });
         }
@@ -48,11 +45,13 @@ export class ColumnController {
                 column_id: id,
             });
 
-            return res.status(200).json({ message: 'Success', results: true });
+            return res.status(200).json({ message: 'Success', results: response[0][0] });
+
         } catch (error: any) {
             return res.status(500).json({ message: error.message, results: false });
         }
     }
+
 
     async updateColumnWhenMoveCard(req: Request, res: Response): Promise<any> {
         const { error, value } = columnSchema.validate(req.body); //check value
@@ -62,6 +61,7 @@ export class ColumnController {
         }
 
         try {
+
             await this.columnService.updateColumnWhenMoveCard(value);
 
             return res.status(200).json({ message: 'Success', results: true });

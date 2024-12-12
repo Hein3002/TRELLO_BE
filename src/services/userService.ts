@@ -23,4 +23,8 @@ export class UserService {
         }
         return null;
     }
+
+    async search(user: UserModel): Promise<any> {
+        return this.userReponsitory.getUserByEmail(user);
+    }
 }

@@ -54,4 +54,17 @@ export class UserController {
         }
     }
 
+    async search(req: Request, res: Response): Promise<any> {
+        try {
+            const results = await this.userService.search(req.body);
+            if (results) {
+                res.status(200).json(results);
+            } else {
+                res.json({ message: 'Not exists' });
+            }
+        } catch (error: any) {
+            res.status(500).json({ message: error.message });
+        }
+    }
+
 }

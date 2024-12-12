@@ -33,4 +33,17 @@ workspaceRouter.delete(
     workspaceController.deleteWorkspace.bind(workspaceController)
 );
 
+workspaceRouter.post(
+    '/createmember',
+    authenticate,
+    workspaceController.createMember.bind(workspaceController)
+);
+
+
+workspaceRouter.get(
+    '/getallbyuserid',
+    authenticate,
+    workspaceController.getAllWorkspaceByUserId.bind(workspaceController)
+);
+
 export default workspaceRouter;

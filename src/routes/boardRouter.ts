@@ -40,4 +40,11 @@ boardRouter.delete(
 );
 
 
+boardRouter.post(
+    '/createguest',
+    authenticate,
+    boardController.createGuest.bind(boardController)
+);
+
+
 export default boardRouter;

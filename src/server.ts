@@ -20,6 +20,7 @@ io.on("connection", (socket) => {
 
     // Lắng nghe sự kiện "send_message" từ client
     socket.on("send_message", (data) => {
+
         console.log("Message received:", data);
 
         // Gửi tin nhắn đến tất cả client khác

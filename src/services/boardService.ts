@@ -4,7 +4,7 @@ import { BoardModel } from "../models/boardModel";
 
 @injectable()
 export class BoardService {
-    constructor(private boardReponsitory: BoardReponsitory) {};
+    constructor(private boardReponsitory: BoardReponsitory) { };
 
     async createBoard(board: BoardModel): Promise<any> {
         return this.boardReponsitory.createBoard(board);
@@ -24,5 +24,9 @@ export class BoardService {
 
     async deleteBoard(id: string): Promise<any> {
         return this.boardReponsitory.deleteBoard(id);
+
+    }
+    async createGuest(board: BoardModel): Promise<any> {
+        return this.boardReponsitory.createGuest(board);
     }
 }
