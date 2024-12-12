@@ -22,16 +22,16 @@ export class BoardReponsitory {
         }
     }
 
-    async updateBoard(board: BoardModel): Promise<any> {
+    async updateIBoard(board: BoardModel): Promise<any> {
         try {
-            const sql = 'call UpdateBoard(?, ?, ?, ?, ?, ?, @err_code, @err_msg)';
+            const sql = 'call UpdateIBoard(?, ?, ?, ?, ?, ?, @err_code, @err_msg)';
             const [results] = await this.db.query(sql, [
                 board.board_id,
+                board.workspace_id,
                 board.name,
                 board.description,
-                board.status,
                 board.background,
-                board.column_id_order
+                board.status
             ]);
 
             if (Array.isArray(results) && results.length > 0) {
@@ -39,6 +39,20 @@ export class BoardReponsitory {
             }
 
             return null;
+        } catch (error: any) {
+            throw new Error(error.message);
+        }
+    }
+
+    async updateBoardWhenMoveColumn(board: BoardModel): Promise<any> {
+        try {
+            const sql = 'call UpdateBoardWhenMoveColumn(?, ?, @err_code, @err_msg)';
+            await this.db.query(sql, [
+                board.board_id,
+                board.column_id_order?.toString()
+            ]);
+
+            return true;
         } catch (error: any) {
             throw new Error(error.message);
         }
@@ -59,13 +73,13 @@ export class BoardReponsitory {
         }
     }
 
-    async getAllBoardByWorkspaceID(id: string): Promise<any> {
+    async deleteBoard(id: string): Promise<any> {
         try {
-            const sql = 'call GetAllBoardByWorkspaceID(?, @err_code, @err_msg)';
+            const sql = 'call DeleteBoard(?, @err_code, @err_msg)';
             const [results] = await this.db.query(sql, [id]);
 
             if (Array.isArray(results) && results.length > 0) {
-                return results;
+                return results[0];
             }
 
             return null;

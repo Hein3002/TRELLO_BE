@@ -10,15 +10,19 @@ export class BoardService {
         return this.boardReponsitory.createBoard(board);
     }
 
-    async updateBoard(board: BoardModel): Promise<any> {
-        return this.boardReponsitory.updateBoard(board);
+    async updateIBoard(board: BoardModel): Promise<any> {
+        return this.boardReponsitory.updateIBoard(board);
+    }
+
+    async updateBoardWhenMoveColumn(board: BoardModel): Promise<any> {
+        return this.boardReponsitory.updateBoardWhenMoveColumn(board);
     }
 
     async getBoardById(id: string): Promise<any> {
         return this.boardReponsitory.getBoardById(id);
     }
 
-    async getAllBoardByWorkspaceID(id: string): Promise<any> {
-        return this.boardReponsitory.getAllBoardByWorkspaceID(id);
+    async deleteBoard(id: string): Promise<any> {
+        return this.boardReponsitory.deleteBoard(id);
     }
 }

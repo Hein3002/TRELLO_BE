@@ -1,7 +1,7 @@
 export interface CardModel {
     card_id?: number;
     column_id?: number;
-    name: string;
+    name?: string;
     description?: string;
     background?: string;
     user_id_join?: string;

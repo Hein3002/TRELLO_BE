@@ -60,8 +60,12 @@ export class WorkspaceReponsitory {
     async deleteWorkspace(id: string): Promise<any> {
         try {
             const sql = 'call DeleteWorkspace(?, @err_code, @err_msg)';
-            await this.db.query(sql, [id]);
 
+            const [results] = await this.db.query(sql, [id]);
+
+            if (Array.isArray(results) && results.length > 0) {
+                return results[0];
+            }
             return null;
         } catch (error: any) {
             throw new Error(error.message);

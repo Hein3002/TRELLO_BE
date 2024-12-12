@@ -16,7 +16,7 @@ cardRouter.post(
 );
 
 cardRouter.post(
-    '/update', uploadMiddleware.Upload,
+    '/update/:id', uploadMiddleware.Upload,
     authenticate,
     cardController.updateCard.bind(cardController)
 );
@@ -25,6 +25,12 @@ cardRouter.get(
     '/getbyid/:id',
     authenticate,
     cardController.getCardByID.bind(cardController)
+);
+
+cardRouter.delete(
+    '/delete/:id',
+    authenticate,
+    cardController.deleteCard.bind(cardController)
 );
 
 export default cardRouter;
