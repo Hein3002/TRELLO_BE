@@ -34,4 +34,19 @@ export class UserReponsitory {
             throw new Error(error.message);
         }
     }
+
+    async getUserByEmail(user: UserModel): Promise<any> {
+        try {
+            const sql = 'call GetUserByEmail(?, @err_code, @err_msg)';
+            const [results] = await this.db.query(sql, [
+                user.email
+            ]);
+            if (Array.isArray(results) && results.length > 0) {
+                return results;
+            }
+            return null;
+        } catch (error: any) {
+            throw new Error(error.message);
+        }
+    }
 }

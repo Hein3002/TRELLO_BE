@@ -21,4 +21,12 @@ export class WorkspaceService {
     async deleteWorkspace(id: string): Promise<any> {
         return this.workspaceReponsitory.deleteWorkspace(id);
     }
+
+    async createMember(workspace: WorkspaceModel): Promise<any> {
+        return this.workspaceReponsitory.createMember(workspace);
+    }
+
+    async getAllWorkspaceByUserId(id: string): Promise<any> {
+        return this.workspaceReponsitory.getAllWorkspaceByUserId(id);
+    }
 }

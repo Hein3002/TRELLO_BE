@@ -18,4 +18,9 @@ userRouter.post(
     userController.login.bind(userController)
 );
 
+userRouter.post(
+    '/search',
+    userController.search.bind(userController)
+);
+
 export default userRouter;

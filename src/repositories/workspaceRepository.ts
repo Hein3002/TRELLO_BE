@@ -8,12 +8,13 @@ export class WorkspaceReponsitory {
 
     async createWorkspace(workspace: WorkspaceModel): Promise<any> {
         try {
-            const sql = 'call CreateWorkspace(?, ?, ?, ?, @err_code, @err_msg)';
+            const sql = 'call CreateWorkspace(?, ?, ?, ?, ?, @err_code, @err_msg)';
             const [results] = await this.db.query(sql, [
                 workspace.name,
                 workspace.description,
                 workspace.status,
-                workspace?.logo
+                workspace?.logo,
+                workspace.user_id,
             ]);
 
             if (Array.isArray(results) && results.length > 0) {
@@ -69,6 +70,35 @@ export class WorkspaceReponsitory {
 
             if (Array.isArray(results) && results.length > 0) {
                 return results[0];
+            }
+
+            return null;
+        } catch (error: any) {
+            throw new Error(error.message);
+        }
+    }
+
+    async createMember(workspace: WorkspaceModel): Promise<any> {
+        try {
+            const sql = 'call CreateMember(?, ?, @err_code, @err_msg)';
+            await this.db.query(sql, [
+                workspace.workspace_id,
+                workspace.user_id,
+            ]);
+
+            return true;
+        } catch (error: any) {
+            throw new Error(error.message);
+        }
+    }
+
+    async getAllWorkspaceByUserId(id: string): Promise<any> {
+        try {
+            const sql = 'call GetAllWorkspaceByUserId(?, @err_code, @err_msg)';
+            const [results] = await this.db.query(sql, [id]);
+
+            if (Array.isArray(results) && results.length > 0) {
+                return results;
             }
 
             return null;

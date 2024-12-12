@@ -12,6 +12,6 @@ export const config = {
     },
     jwt: {
         secret: process.env.JWT_SECRET || 'I am the best OK!',
-        expiresIn: process.env.JWT_EXPIRES_IN || '2d',
+        expiresIn: process.env.JWT_EXPIRES_IN || '24h',
     },
 };

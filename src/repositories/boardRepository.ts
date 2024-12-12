@@ -8,16 +8,23 @@ export class BoardReponsitory {
 
     async createBoard(board: BoardModel): Promise<any> {
         try {
-            const sql = 'call CreateBoard(?, ?, ?, ?, ?, @err_code, @err_msg)';
+            const sql = 'call CreateBoard(?, ?, ?, ?, ?, ?, @err_code, @err_msg)';
             const [results] = await this.db.query(sql, [
                 board.workspace_id,
                 board.name,
                 board.description,
                 board.background,
-                board.status
+                board.status,
+                board.user_id,
             ]);
 
             if (Array.isArray(results) && results.length > 0) {
+                if (!results[0].description) {
+                    results[0].description = '';
+                }
+                if (!results[0].column) {
+                    results[0].column = [];
+                }
                 return results[0];
             }
 
@@ -69,10 +76,10 @@ export class BoardReponsitory {
             const [results] = await this.db.query(sql, [id]);
 
             if (Array.isArray(results) && results.length > 0) {
-                if(!results[0].description){
+                if (!results[0].description) {
                     results[0].description = '';
                 }
-                if(!results[0].column){
+                if (!results[0].column) {
                     results[0].column = [];
                 }
                 return results[0];
@@ -94,6 +101,20 @@ export class BoardReponsitory {
             }
 
             return null;
+        } catch (error: any) {
+            throw new Error(error.message);
+        }
+    }
+
+    async createGuest(board: BoardModel): Promise<any> {
+        try {
+            const sql = 'call CreateGuest(?, ?, @err_code, @err_msg)';
+            await this.db.query(sql, [
+                board.board_id,
+                board.user_id,
+            ]);
+
+            return true;
         } catch (error: any) {
             throw new Error(error.message);
         }
