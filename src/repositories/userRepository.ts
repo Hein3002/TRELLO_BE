@@ -16,7 +16,7 @@ export class UserReponsitory {
             ]);
             return true;
         } catch (error: any) {
-            throw new Error(error.message);
+            throw new Error(error);
         }
     }
 

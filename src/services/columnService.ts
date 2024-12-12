@@ -7,6 +7,7 @@ export class ColumnService {
     constructor(private columnReponsitory: ColumnReponsitory) {};
 
     async createColumn(column: ColumnModel): Promise<any> {
+        console.log(column)
         return this.columnReponsitory.createColumn(column);
     }
 

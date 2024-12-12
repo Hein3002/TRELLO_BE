@@ -14,6 +14,15 @@ export class ColumnController {
             return res.status(422).json({ message: error.details[0].message });
         }
 
+        const files = req.files as Express.Multer.File[];
+        let filePaths: string[] = [];
+        
+        if (files?.length > 0) {
+            filePaths = files.map(file => file.path);
+        } else {
+            filePaths ? [req.body.files] : null;
+        }
+
         try {
             const results = await this.columnService.createColumn(value);
             return  res.status(200).json(results);
@@ -36,11 +45,13 @@ export class ColumnController {
                 column_id: id,
             });
 
-            return res.status(200).json({ message: 'Success', results: true });
+            return res.status(200).json({ message: 'Success', results: response[0][0] });
+
         } catch (error: any) {
             return res.status(500).json({ message: error.message, results: false });
         }
     }
+
 
     async updateColumnWhenMoveCard(req: Request, res: Response): Promise<any> {
         const { error, value } = columnSchema.validate(req.body); //check value
@@ -50,6 +61,7 @@ export class ColumnController {
         }
 
         try {
+
             await this.columnService.updateColumnWhenMoveCard(value);
 
             return res.status(200).json({ message: 'Success', results: true });

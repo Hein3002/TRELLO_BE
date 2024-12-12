@@ -9,4 +9,3 @@ export const boardSchema = Joi.object({
     board_id: Joi.number().optional(),
     column_id_order: Joi.any().optional(),
     user_id: Joi.number().optional(),
-});

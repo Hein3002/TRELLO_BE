@@ -93,7 +93,8 @@ export class BoardController {
     async deleteBoard(req: Request, res: Response): Promise<any> {
         try {
             const id = req.params.id;
-            const oldFilePath = await this.boardService.deleteBoard(id);
+            const oldFilePath  = await this.boardService.deleteBoard(id);
+
             uploadMiddleware.Remove(oldFilePath.old_path);
             return res.status(200).json({ message: 'Success', success: true });
         } catch (error: any) {
@@ -112,7 +113,6 @@ export class BoardController {
             await this.boardService.createGuest(value);
             return res.status(200).json({ message: 'Success', success: true });
         } catch (error: any) {
-            res.status(500).json({ message: error.message, results: false });
         }
     }
 }
