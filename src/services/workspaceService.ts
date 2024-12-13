@@ -26,7 +26,11 @@ export class WorkspaceService {
         return this.workspaceReponsitory.createMember(workspace);
     }
 
-    async getAllWorkspaceByUserId(id: string): Promise<any> {
-        return this.workspaceReponsitory.getAllWorkspaceByUserId(id);
+    async getAllWorkspaceByUserIdMember(id: string): Promise<any> {
+        return this.workspaceReponsitory.getAllWorkspaceByUserIdMember(id);
+    }
+
+    async getAllWorkspaceByUserIdGuest(id: string): Promise<any> {
+        return this.workspaceReponsitory.getAllWorkspaceByUserIdGuest(id);
     }
 }

@@ -39,11 +39,16 @@ workspaceRouter.post(
     workspaceController.createMember.bind(workspaceController)
 );
 
+workspaceRouter.get(
+    '/getallbyuseridmember',
+    authenticate,
+    workspaceController.getAllWorkspaceByUserIdMember.bind(workspaceController)
+);
 
 workspaceRouter.get(
-    '/getallbyuserid',
+    '/getallbyuseridguest',
     authenticate,
-    workspaceController.getAllWorkspaceByUserId.bind(workspaceController)
+    workspaceController.getAllWorkspaceByUserIdGuest.bind(workspaceController)
 );
 
 export default workspaceRouter;

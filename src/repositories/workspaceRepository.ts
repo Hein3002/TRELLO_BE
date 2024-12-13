@@ -92,9 +92,24 @@ export class WorkspaceReponsitory {
         }
     }
 
-    async getAllWorkspaceByUserId(id: string): Promise<any> {
+    async getAllWorkspaceByUserIdMember(id: string): Promise<any> {
         try {
-            const sql = 'call GetAllWorkspaceByUserId(?, @err_code, @err_msg)';
+            const sql = 'call GetAllWorkspaceByUserIdMember(?, @err_code, @err_msg)';
+            const [results] = await this.db.query(sql, [id]);
+
+            if (Array.isArray(results) && results.length > 0) {
+                return results;
+            }
+
+            return null;
+        } catch (error: any) {
+            throw new Error(error.message);
+        }
+    }
+
+    async getAllWorkspaceByUserIdGuest(id: string): Promise<any> {
+        try {
+            const sql = 'call GetAllWorkspaceByUserIdGuest(?, @err_code, @err_msg)';
             const [results] = await this.db.query(sql, [id]);
 
             if (Array.isArray(results) && results.length > 0) {

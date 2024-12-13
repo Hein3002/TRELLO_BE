@@ -100,10 +100,24 @@ export class WorkspaceController {
         }
     }
 
-    async getAllWorkspaceByUserId(req: Request, res: Response): Promise<any> {
+    async getAllWorkspaceByUserIdMember(req: Request, res: Response): Promise<any> {
         try {
             const user = (req as any).user;
-            const results = await this.workspaceService.getAllWorkspaceByUserId(user.user_id);
+            const results = await this.workspaceService.getAllWorkspaceByUserIdMember(user.user_id);
+            if (results) {
+                res.status(200).json(results);
+            } else {
+                res.json({ message: 'Not exists' });
+            }
+        } catch (error: any) {
+            res.status(500).json({ message: error.message });
+        }
+    }
+
+    async getAllWorkspaceByUserIdGuest(req: Request, res: Response): Promise<any> {
+        try {
+            const user = (req as any).user;
+            const results = await this.workspaceService.getAllWorkspaceByUserIdGuest(user.user_id);
             if (results) {
                 res.status(200).json(results);
             } else {
