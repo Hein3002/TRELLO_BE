@@ -24,8 +24,8 @@ export class BoardService {
 
     async deleteBoard(id: string): Promise<any> {
         return this.boardReponsitory.deleteBoard(id);
-    }
 
+    }
     async createGuest(board: BoardModel): Promise<any> {
         return this.boardReponsitory.createGuest(board);
     }

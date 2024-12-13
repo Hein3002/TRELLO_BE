@@ -19,6 +19,7 @@ export class CardController {
         }
 
         try {
+
             const results = await this.cardService.createCard(value);
             return  res.status(200).json(results);
         } catch (error: any) {

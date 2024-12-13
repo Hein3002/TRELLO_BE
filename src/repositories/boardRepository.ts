@@ -61,7 +61,8 @@ export class BoardReponsitory {
             const sql = 'call UpdateBoardWhenMoveColumn(?, ?, @err_code, @err_msg)';
             await this.db.query(sql, [
                 board.board_id,
-                board.column_id_order
+                board.column_id_order?.toString()
+
             ]);
 
             return true;

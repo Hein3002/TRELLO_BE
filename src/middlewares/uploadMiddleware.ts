@@ -5,7 +5,7 @@ import fs from 'fs';
 
 @injectable()
 export class UploadMiddleware {
-  private upload = multer({
+  private upload = multer({ 
     storage: multer.diskStorage({
       destination: (req, file, cb) => {
         const date = new Date();
