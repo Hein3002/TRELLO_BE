@@ -45,7 +45,7 @@ export class ColumnController {
                 column_id: id,
             });
 
-            return res.status(200).json({ message: 'Success', results: response[0][0] });
+            return res.status(200).json({ message: 'Success', results: true });
 
         } catch (error: any) {
             return res.status(500).json({ message: error.message, results: false });
