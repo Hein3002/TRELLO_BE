@@ -3,6 +3,7 @@ import { Router } from "express";
 import { container } from "tsyringe";
 import { UserController } from "../controllers/userController";
 import { UploadMiddleware } from '../middlewares/uploadMiddleware';
+import { authenticate } from '../middlewares/authMiddleware';
 
 const userRouter = Router();
 const userController = container.resolve(UserController);
@@ -20,6 +21,7 @@ userRouter.post(
 
 userRouter.post(
     '/search',
+    authenticate,
     userController.search.bind(userController)
 );
 

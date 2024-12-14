@@ -14,7 +14,7 @@ conversationRouter.post(
 );
 
 conversationRouter.get(
-    '/getconversationbyuserid/:id',
+    '/getconversationbyuserid',
     authenticate,
     conversationController.getConversationByUserID.bind(conversationController)
 );

@@ -8,6 +8,9 @@ import cardRouter from './cardRouter';
 import conversationRouter from './conversationRouter';
 import messageRouter from './messageRouter';
 
+import fileRouter from './fileRouter';
+import checkListRouter from './checkListRouter';
+
 const router = Router();
 router.use('', userRouter);
 router.use('/workspace', workspaceRouter);
@@ -16,5 +19,8 @@ router.use('/column', columnRouter);
 router.use('/card', cardRouter);
 router.use('/conversation', conversationRouter);
 router.use('/message', messageRouter);
+
+router.use('/file', fileRouter);
+router.use('/checklist', checkListRouter);
 
 export default router;

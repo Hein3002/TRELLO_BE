@@ -25,8 +25,8 @@ export class ConversationController {
 
     async getConversationByUserID(req: Request, res: Response): Promise<any> {
         try {
-            const id = req.params.id;
-            const results = await this.conversationService.getConversationByUserID(id);
+            const user = (req as any).user;
+            const results = await this.conversationService.getConversationByUserID(user.user_id);
             if (results) {
                 res.status(200).json(results);
             } else {
