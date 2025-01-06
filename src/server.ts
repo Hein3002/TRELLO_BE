@@ -14,22 +14,33 @@ const io = new Server(server, {
     },
 });
 
-// Sự kiện khi một client kết nối
+interface ActiveUser {
+    userId: string;
+    socketId: string;
+}
+
+let activeUser: ActiveUser[] = [];
+
 io.on("connection", (socket) => {
-    console.log("User connected:", socket.id);
 
-    // Lắng nghe sự kiện "send_message" từ client
-    socket.on("send_message", (data) => {
-
-        console.log("Message received:", data);
-
-        // Gửi tin nhắn đến tất cả client khác
-        io.emit("receive_message", data);
+    socket.on("new_user_add", (newUserId) => {
+        if (!activeUser.some((user) => user.userId === newUserId)) {
+            activeUser.push({ userId: newUserId, socketId: socket.id });
+            console.log("New User Connected", activeUser);
+        }
     });
 
-    // Sự kiện khi client ngắt kết nối
+    socket.on("send_message", (data) => {
+        const { receive_id } = data;
+        const user = activeUser.find((user) => user.userId === String(receive_id));
+        if (user) {
+            io.to(user.socketId).emit("receive_message", data);
+        }
+    });
+
     socket.on("disconnect", () => {
-        console.log("User disconnected:", socket.id);
+        activeUser = activeUser.filter((user) => user.socketId !== socket.id);
+        console.log("User disconnected:", socket.id, "Remaining users:", activeUser);
     });
 });
 

@@ -24,9 +24,16 @@ export class BoardService {
 
     async deleteBoard(id: string): Promise<any> {
         return this.boardReponsitory.deleteBoard(id);
-
     }
+
     async createGuest(board: BoardModel): Promise<any> {
         return this.boardReponsitory.createGuest(board);
+    }
+    async getBoardByCustom(board: BoardModel): Promise<any> {
+        return this.boardReponsitory.getBoardByCustom(board);
+    }
+
+    async deleteGuest(board: BoardModel): Promise<any> {
+        return this.boardReponsitory.deleteGuest(board);
     }
 }

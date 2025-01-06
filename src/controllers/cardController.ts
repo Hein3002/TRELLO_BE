@@ -21,13 +21,13 @@ export class CardController {
         try {
 
             const results = await this.cardService.createCard(value);
-            return  res.status(200).json(results);
+            return res.status(200).json(results);
         } catch (error: any) {
             res.status(500).json({ message: error.message, results: false });
         }
     }
 
-    async updateCard(req: Request, res: Response): Promise<any> {
+    async updateInformationCard(req: Request, res: Response): Promise<any> {
         const { error, value } = cardSchema.validate(req.body); //check value
 
         if (error) {
@@ -36,16 +36,11 @@ export class CardController {
 
         try {
             const id = req.params.id;
-            const files = req.files as Express.Multer.File[];
-            const filePaths = files.map(file => file.path);
 
-            const oldFilePath = await this.cardService.updateCard({
+            await this.cardService.updateInformationCard({
                 ...value,
                 card_id: id,
-                background: filePaths,
             });
-
-            uploadMiddleware.Remove(oldFilePath.old_path);
 
             return res.status(200).json({ message: 'Success', results: true });
         } catch (error: any) {
@@ -70,11 +65,133 @@ export class CardController {
     async deleteCard(req: Request, res: Response): Promise<any> {
         try {
             const id = req.params.id;
-            const oldFilePath  = await this.cardService.deleteCard(id);
+            const oldFilePath = await this.cardService.deleteCard(id);
             uploadMiddleware.Remove(oldFilePath.old_path);
             return res.status(200).json({ message: 'Success', success: true });
         } catch (error: any) {
             return res.status(500).json({ message: error.message, success: false });
+        }
+    }
+
+    async createUserJoinCard(req: Request, res: Response): Promise<any> {
+        const { error, value } = cardSchema.validate(req.body); //check value
+
+        if (error) {
+            return res.status(422).json({ message: error.details[0].message });
+        }
+
+        try {
+            const id = parseInt(req.params.id, 10);
+            const results = await this.cardService.createUserJoinCard({
+                ... value,
+                card_id: id
+            });
+            return res.status(200).json(results);
+        } catch (error: any) {
+            res.status(500).json({ message: error.message });
+        }
+    }
+
+    async deleteUserJoincard(req: Request, res: Response): Promise<any> {
+        const { error, value } = cardSchema.validate(req.body); //check value
+
+        if (error) {
+            return res.status(422).json({ message: error.details[0].message });
+        }
+
+        try {
+            const id = parseInt(req.params.id, 10);
+            await this.cardService.deleteUserJoincard({
+                ...value,
+                card_id: id
+            });
+            return res.status(200).json(req.body);
+        } catch (error: any) {
+            res.status(500).json({ message: error.message });
+        }
+    }
+
+    async getAllCardByBoardID(req: Request, res: Response): Promise<any> {
+        try {
+            const id = req.params.id;
+            const results = await this.cardService.getAllCardByBoardID(id);
+            if (results) {
+                res.status(200).json(results);
+            } else {
+                res.json([]);
+            }
+        } catch (error: any) {
+            res.status(500).json({ message: error.message });
+        }
+    }
+
+    async updateTimeCard(req: Request, res: Response): Promise<any> {
+        const { error, value } = cardSchema.validate(req.body); //check value
+
+        if (error) {
+            return res.status(422).json({ message: error.details[0].message });
+        }
+
+        try {
+            const id = req.params.id;
+
+            await this.cardService.updateTimeCard({
+                ...value,
+                card_id: id,
+            });
+
+            return res.status(200).json({ message: 'Success', results: true });
+        } catch (error: any) {
+            res.status(500).json({ message: error.message, results: false });
+        }
+    }
+
+    async updateCardByColumnID(req: Request, res: Response): Promise<any> {
+        const { error, value } = cardSchema.validate(req.body); //check value
+
+        if (error) {
+            return res.status(422).json({ message: error.details[0].message });
+        }
+
+        try {
+            const id = req.params.id;
+
+            await this.cardService.updateCardByColumnID({
+                ...value,
+                card_id: id,
+            });
+
+            return res.status(200).json({ message: 'Success', results: true });
+        } catch (error: any) {
+            res.status(500).json({ message: error.message, results: false });
+        }
+    }
+
+    async getCardByColumn(req: Request, res: Response): Promise<any> {
+        try {
+            const id = req.params.id;
+            const results = await this.cardService.getCardByColumn(id);
+            if (results) {
+                res.status(200).json(results);
+            } else {
+                res.json({ message: 'Not exists' });
+            }
+        } catch (error: any) {
+            res.status(500).json({ message: error.message });
+        }
+    }
+
+    async getCardByUser(req: Request, res: Response): Promise<any> {
+        try {
+            const id = req.params.id;
+            const results = await this.cardService.getCardByUser(id);
+            if (results) {
+                res.status(200).json(results);
+            } else {
+                res.json({ message: 'Not exists' });
+            }
+        } catch (error: any) {
+            res.status(500).json({ message: error.message });
         }
     }
 }

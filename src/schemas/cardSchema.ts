@@ -8,7 +8,8 @@ export const cardSchema = Joi.object({
     card_id: Joi.number().optional(),
     user_id_join: Joi.any().optional(),
     description: Joi.string().optional(),
-    start_date: Joi.date().optional(),
-    end_date: Joi.date().optional(),
-    timer: Joi.date().optional(),
+    start_date: Joi.any().optional(),
+    end_date: Joi.any().optional(),
+    timer: Joi.any().optional(),
+    user_id: Joi.number().optional(),
 });

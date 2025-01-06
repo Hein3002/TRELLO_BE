@@ -30,7 +30,7 @@ export class MessageController {
             if (results) {
                 res.status(200).json(results);
             } else {
-                res.json({ message: 'Not exists' });
+                res.json([]);
             }
         } catch (error: any) {
             res.status(500).json({ message: error.message });

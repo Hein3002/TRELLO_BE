@@ -31,4 +31,10 @@ columnRouter.delete(
     columnController.deleteColumn.bind(columnController)
 );
 
+columnRouter.get(
+    '/getallbyboardid/:id',
+    authenticate,
+    columnController.getAllColumnByBoardID.bind(columnController)
+);
+
 export default columnRouter;

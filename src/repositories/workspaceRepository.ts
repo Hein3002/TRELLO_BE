@@ -48,10 +48,13 @@ export class WorkspaceReponsitory {
         }
     }
 
-    async getWorkspaceById(id: string): Promise<any> {
+    async getWorkspaceById(workspace: WorkspaceModel): Promise<any> {
         try {
-            const sql = 'call GetWorkspaceByID(?, @err_code, @err_msg)';
-            const [results] = await this.db.query(sql, [id]);
+            const sql = 'call GetWorkspaceByID(?, ?, @err_code, @err_msg)';
+            const [results] = await this.db.query(sql, [
+                workspace.workspace_id,
+                workspace.user_id,
+            ]);
 
             if (Array.isArray(results) && results.length > 0) {
                 return results[0];
@@ -120,4 +123,48 @@ export class WorkspaceReponsitory {
             throw new Error(error.message);
         }
     }
+
+    async getMemberByWorkspaceID(id: string): Promise<any> {
+        try {
+            const sql = 'call GetMemberByWorkspaceID(?, @err_code, @err_msg)';
+            const [results] = await this.db.query(sql, [id]);
+
+            if (Array.isArray(results) && results.length > 0) {
+                return results;
+            }
+
+            return null;
+        } catch (error: any) {
+            throw new Error(error.message);
+        }
+    }
+
+    async getGuestByWorkspaceID(id: string): Promise<any> {
+        try {
+            const sql = 'call GetGuestByWorkspaceID(?, @err_code, @err_msg)';
+            const [results] = await this.db.query(sql, [id]);
+
+            if (Array.isArray(results) && results.length > 0) {
+                return results;
+            }
+            
+            return null;
+        } catch (error: any) {
+            throw new Error(error.message);
+        }
+    }
+
+     async deleteMember(workspace: WorkspaceModel): Promise<any> {
+            try {
+                const sql = 'call DeleteMember(?, ?, @err_code, @err_msg)';
+                await this.db.query(sql, [
+                    workspace.workspace_id,
+                    workspace.user_id
+                ]);
+    
+                return true;
+            } catch (error: any) {
+                throw new Error(error.message);
+            }
+        }
 }

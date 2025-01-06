@@ -16,7 +16,12 @@ export class UserController {
         }
 
         try {
-            await this.userService.register(value);
+            const files = req.files as Express.Multer.File[];
+            const filePaths = files.map(file => file.path);
+            await this.userService.register({
+                ...value,
+                avatar: filePaths,
+            });
             return res.status(200).json({ message: 'Success', results: true });
         } catch (error: any) {
             if (error.message.includes('Duplicate entry')) {
@@ -45,7 +50,7 @@ export class UserController {
                     // maxAge: 60 * 60 * 1000, // set time for live 1h
                 });
 
-                return res.json({token: results.token});
+                return res.json({token: results.token, user_id: results.user_id, name: results.name, avatar: results.avatar });
             } else {
                 return res.status(401).json({ message: "Error email or password!" });
             }

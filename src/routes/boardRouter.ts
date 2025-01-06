@@ -46,5 +46,16 @@ boardRouter.post(
     boardController.createGuest.bind(boardController)
 );
 
+boardRouter.post(
+    '/getboardbycustom/:id',
+    authenticate,
+    boardController.getBoardByCustom.bind(boardController)
+);
+
+boardRouter.post(
+    '/deleteguest/:id',
+    authenticate,
+    boardController.deleteGuest.bind(boardController)
+);
 
 export default boardRouter;

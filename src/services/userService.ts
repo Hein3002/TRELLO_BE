@@ -18,7 +18,8 @@ export class UserService {
             return {
                 user_id: results.user_id,
                 name: results.name,
-                email: results.email
+                email: results.email,
+                avatar: results.avatar
             };
         }
         return null;

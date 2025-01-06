@@ -51,4 +51,22 @@ workspaceRouter.get(
     workspaceController.getAllWorkspaceByUserIdGuest.bind(workspaceController)
 );
 
+workspaceRouter.get(
+    '/getmemberbyworkspaceid/:id',
+    authenticate,
+    workspaceController.getMemberByWorkspaceID.bind(workspaceController)
+);
+
+workspaceRouter.get(
+    '/getguestbyworkspaceid/:id',
+    authenticate,
+    workspaceController.getGuestByWorkspaceID.bind(workspaceController)
+);
+
+workspaceRouter.post(
+    '/deletemember/:id',
+    authenticate,
+    workspaceController.deleteMember.bind(workspaceController)
+);
+
 export default workspaceRouter;

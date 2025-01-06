@@ -52,7 +52,6 @@ export class ColumnController {
         }
     }
 
-
     async updateColumnWhenMoveCard(req: Request, res: Response): Promise<any> {
         const { error, value } = columnSchema.validate(req.body); //check value
 
@@ -75,6 +74,20 @@ export class ColumnController {
             const id = req.params.id;
             await this.columnService.deleteColumn(id);
             return res.status(200).json({ message: 'Success', results: true });
+        } catch (error: any) {
+            res.status(500).json({ message: error.message });
+        }
+    }
+
+    async getAllColumnByBoardID(req: Request, res: Response): Promise<any> {
+        try {
+            const id = req.params.id;
+            const results = await this.columnService.getAllColumnByBoardID(id);
+            if (results) {
+                res.status(200).json(results);
+            } else {
+                res.json([]);
+            }
         } catch (error: any) {
             res.status(500).json({ message: error.message });
         }

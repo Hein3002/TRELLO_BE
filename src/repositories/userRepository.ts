@@ -8,11 +8,12 @@ export class UserReponsitory {
 
     async createUser(user: UserModel): Promise<any> {
         try {
-            const sql = 'call CreateUser(?, ?, ?, @err_code, @err_msg)';
+            const sql = 'call CreateUser(?, ?, ?, ?, @err_code, @err_msg)';
             await this.db.query(sql, [
                 user.name,
                 user.email,
-                user.password
+                user.password,
+                user.avatar
             ]);
             return true;
         } catch (error: any) {

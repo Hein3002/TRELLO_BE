@@ -110,9 +110,45 @@ export class BoardReponsitory {
     async createGuest(board: BoardModel): Promise<any> {
         try {
             const sql = 'call CreateGuest(?, ?, @err_code, @err_msg)';
-            await this.db.query(sql, [
+            const [results] = await this.db.query(sql, [
                 board.board_id,
                 board.user_id,
+            ]);
+
+            if (Array.isArray(results) && results.length > 0) {
+                return results[0];
+            }
+
+            return true;
+        } catch (error: any) {
+            throw new Error(error.message);
+        }
+    }
+
+    async getBoardByCustom(board: BoardModel): Promise<any> {
+        try {
+            const sql = 'call GetBoardByCustom(?, ?, @err_code, @err_msg)';
+            const [results] = await this.db.query(sql, [
+                board.board_id,
+                board.user_id
+            ]);
+
+            if (Array.isArray(results) && results.length > 0) {
+                return results[0];
+            }
+
+            return null;
+        } catch (error: any) {
+            throw new Error(error.message);
+        }
+    }
+
+    async deleteGuest(board: BoardModel): Promise<any> {
+        try {
+            const sql = 'call DeleteGuest(?, ?, @err_code, @err_msg)';
+            await this.db.query(sql, [
+                board.board_id,
+                board.user_id
             ]);
 
             return true;
@@ -120,4 +156,5 @@ export class BoardReponsitory {
             throw new Error(error.message);
         }
     }
+
 }

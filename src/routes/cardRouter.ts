@@ -16,9 +16,9 @@ cardRouter.post(
 );
 
 cardRouter.post(
-    '/update/:id', uploadMiddleware.Upload,
+    '/updateinformation/:id',
     authenticate,
-    cardController.updateCard.bind(cardController)
+    cardController.updateInformationCard.bind(cardController)
 );
 
 cardRouter.get(
@@ -32,5 +32,48 @@ cardRouter.delete(
     authenticate,
     cardController.deleteCard.bind(cardController)
 );
+
+cardRouter.post(
+    '/updateuserjoin/:id',
+    authenticate,
+    cardController.createUserJoinCard.bind(cardController)
+);
+
+cardRouter.post(
+    '/updateuserout/:id',
+    authenticate,
+    cardController.deleteUserJoincard.bind(cardController)
+);
+
+cardRouter.get(
+    '/getallbyboardid/:id',
+    authenticate,
+    cardController.getAllCardByBoardID.bind(cardController)
+);
+
+cardRouter.post(
+    '/updatetime/:id',
+    authenticate,
+    cardController.updateTimeCard.bind(cardController)
+);
+
+cardRouter.post(
+    '/updatebycolumnid/:id',
+    authenticate,
+    cardController.updateCardByColumnID.bind(cardController)
+);
+
+cardRouter.get(
+    '/getbycolumn/:id',
+    authenticate,
+    cardController.getCardByColumn.bind(cardController)
+);
+
+cardRouter.get(
+    '/getbyuser/:id',
+    authenticate,
+    cardController.getCardByUser.bind(cardController)
+);
+
 
 export default cardRouter;

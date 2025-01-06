@@ -6,7 +6,7 @@ export const checkListSchema = Joi.object({
     name: Joi.string().pattern(/^[\p{L}\p{N} ]*$/u).optional(),
 
     checklist_id: Joi.number().optional(),
-    user_id: Joi.number().optional(),
-    timer: Joi.date().optional(),
+    user_id: Joi.any().optional(),
+    timer: Joi.any().optional(),
     status: Joi.string().optional(),
 });

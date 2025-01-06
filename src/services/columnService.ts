@@ -22,4 +22,8 @@ export class ColumnService {
     async deleteColumn(id: string): Promise<any> {
         return this.columnReponsitory.deleteColumn(id);
     }
+
+    async getAllColumnByBoardID(id: string): Promise<any> {
+        return this.columnReponsitory.getAllColumnByBoardID(id);
+    }
 }

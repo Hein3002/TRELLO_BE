@@ -68,14 +68,19 @@ export class CheckListReponsitory {
 
     async updateCheckList(checkList: CheckListModel): Promise<any> {
         try {
-            const sql = 'call UpdateCheckList(?, ?, ?, ?, ?, @err_code, @err_msg)';
-            await this.db.query(sql, [
+            const sql = 'call UpdateCheckList(?, ?, ?, ?, ?, ?, @err_code, @err_msg)';
+            const [results] = await this.db.query(sql, [
                 checkList.checklist_id,
                 checkList.user_id,
                 checkList.name,
                 checkList.timer,
-                checkList.status
+                checkList.status,
+                checkList.card_id,
             ]);
+
+            if (Array.isArray(results) && results.length > 0) {
+                return results[0];
+            }
 
             return true;
         } catch (error: any) {

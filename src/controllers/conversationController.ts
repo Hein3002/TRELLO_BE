@@ -16,8 +16,8 @@ export class ConversationController {
         }
 
         try {
-            await this.conversationService.createConversation(value);
-            return res.status(200).json({ message: 'Success', results: true });
+            const results = await this.conversationService.createConversation(value);
+            return res.status(200).json(results);
         } catch (error: any) {
             res.status(500).json({ message: error.message, results: false });
         }

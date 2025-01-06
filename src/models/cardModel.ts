@@ -8,5 +8,6 @@ export interface CardModel {
     start_date?: Date;
     end_date?: Date;
     timer?: Date;
-    status?: string
+    status?: string;
+    user_id?: number;
 }

@@ -77,12 +77,12 @@ export class CheckListController {
 
         try {
             const id = req.params.id;
-            await this.checkListService.updateCheckList({
+            const results = await this.checkListService.updateCheckList({
                 ...value,
                 checklist_id: id,
             });
 
-            return res.status(200).json({ message: 'Success', results: true });
+            return res.status(200).json(results);
 
         } catch (error: any) {
             return res.status(500).json({ message: error.message, results: false });
